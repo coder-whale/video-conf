@@ -252,6 +252,20 @@ function handleRemoteHangup() {
   isInitiator = false;
 }
 
+function mute() {
+  var muteButton = document.getElementById("muteButton");
+  if (muteButton.value=="Mute")
+  {
+      muteButton.value="Unmute";
+      muteButton.innerHTML="Unmute";
+  }
+  else
+  {
+      muteButton.value="Mute";
+      muteButton.innerHTML="Mute";
+  }
+}    
+
 function stop() {
   isStarted = false;
   pc.close();
