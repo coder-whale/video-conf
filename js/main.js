@@ -92,7 +92,7 @@ socket.on('message', function(message) {
 
 var localVideo = document.querySelector('#localVideo');
 var remoteVideo = document.querySelector('#remoteVideo');
-//var localAudio = document.querySelector('#localAudio');
+var localAudio = document.querySelector('#localAudio');
 navigator.mediaDevices.getUserMedia({
   audio: true,
   video: true
@@ -106,7 +106,7 @@ function gotStream(stream) {
   console.log('Adding local stream.');
   localStream = stream;
   localVideo.srcObject = stream;
-  //localAudio.srcObject = stream;
+  localAudio.srcObject = stream;
   sendMessage('got user media');
   if (isInitiator) {
     maybeStart();
@@ -258,11 +258,13 @@ function mute() {
   {
       muteButton.value="Unmute";
       muteButton.innerHTML="Unmute";
+      localAudio.srcObject = null;
   }
   else
   {
       muteButton.value="Mute";
       muteButton.innerHTML="Mute";
+      localAudio.srcObject = localStream;
   }
 }    
 
