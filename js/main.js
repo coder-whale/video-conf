@@ -254,21 +254,45 @@ function handleRemoteHangup() {
   isInitiator = false;
 }
 
-function mute() {
-  var muteButton = document.getElementById("muteButton");
-  if (muteButton.value=="Mute")
+//Audio toggle function
+function audiotoggle() {
+  var audioButton = document.getElementById("audioButton");
+  if (audioButton.value=="audioOn")
   {
-      muteButton.value="Unmute";
-      muteButton.innerHTML="Unmute";
-      localAudio.srcObject = null;
+      audioButton.value="audioOff";
+      audioButton.innerHTML="Unmute";
+      //localAudio.srcObject = null;
+      localStream.getAudioTracks()[0].enabled = false;
+      
   }
   else
   {
-      muteButton.value="Mute";
-      muteButton.innerHTML="Mute";
-      localAudio.srcObject = localStream;
+      audioButton.value="audioOn";
+      audioButton.innerHTML="Mute";
+      //localAudio.srcObject = localStream;
+      localStream.getAudioTracks()[0].enabled = true;
   }
-}    
+}  
+
+//Video toggle function
+function videotoggle() {
+  var videoButton = document.getElementById("videoButton");
+  if (videoButton.value=="videoOn")
+  {
+      videoButton.value="videoOff";
+      videoButton.innerHTML="Turn on video";
+      //localAudio.srcObject = null;
+      localStream.getVideoTracks()[0].enabled = false;
+      
+  }
+  else
+  {
+      videoButton.value="videoOn";
+      videoButton.innerHTML="Turn off video";
+      //localAudio.srcObject = localStream;
+      localStream.getVideoTracks()[0].enabled = true;
+  }
+}   
 
 function stop() {
   isStarted = false;
