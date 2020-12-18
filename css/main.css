@@ -4,5 +4,24 @@ body {
 
 video {
   max-width: 100%;
-  width: 320px;
+  width: 720px;
+}
+
+#videolistbutton{
+  position: fixed;
+  right: 25px;
+  top: 20px;
+}
+
+.videolist{
+ position: fixed;
+ right: 5px;
+ top: 60px; 
+ display: list-item;
+ list-style-type: none;
+}
+
+.listelement{
+ width: 200px;
+    
 }

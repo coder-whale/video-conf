@@ -92,8 +92,8 @@ socket.on('message', function(message) {
 
 var localVideo = document.querySelector('#localVideo');
 var remoteVideo = document.querySelector('#remoteVideo');
-var localAudio = document.querySelector('#localAudio');
-var remoteAudio = document.querySelector('#remoteAudio');
+var vid1 = document.querySelector('#vid1');
+var vid2 = document.querySelector('#vid2');
 navigator.mediaDevices.getUserMedia({
   audio: true,
   video: true
@@ -107,7 +107,8 @@ function gotStream(stream) {
   console.log('Adding local stream.');
   localStream = stream;
   localVideo.srcObject = stream;
-  localAudio.srcObject = stream;
+  vid1.srcObject = localVideo.srcObject;
+  vid2.srcObject = localVideo.srcObject;
   sendMessage('got user media');
   if (isInitiator) {
     maybeStart();
@@ -235,7 +236,6 @@ function handleRemoteStreamAdded(event) {
   console.log('Remote stream added.');
   remoteStream = event.stream;
   remoteVideo.srcObject = remoteStream;
-  remoteAudio.srcObject = remoteStream;
 }
 
 function handleRemoteStreamRemoved(event) {

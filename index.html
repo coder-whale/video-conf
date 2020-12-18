@@ -3,25 +3,26 @@
 
 <head>
 
-  <title>Realtime communication with WebRTC</title>
-
   <link rel="stylesheet" href="/css/main.css" />
 
 </head>
 
 <body>
 
-  <h1>Realtime communication with WebRTC</h1>
-
   <div id="videos">
-    <video id="localVideo" autoplay muted></video>
-    <video id="remoteVideo" autoplay muted></video>
+    <video id="localVideo" autoplay></video>
+    <video id="remoteVideo" autoplay></video>
   </div>
   <button id="audioButton" onclick="audiotoggle()" type="button" value="audioOn">Mute</button>
   <button id="videoButton" onclick="videotoggle()" type="button" value="videoOn">Turn off video</button>
-  <div id="audios">
-  <audio id="localAudio" autoplay="true"></audio>
-  <audio id="remoteAudio" autoplay="true"></audio>
+  <button id="videolistbutton" type="button">List</button>
+  <div class="videolist">
+  <div class="listelement">
+  <video id="vid1" autoplay muted></video>
+  </div>
+  <div class="listelement">
+  <video id="vid2" autoplay muted></video>
+  </div>
   </div>
 
   <script src="/socket.io/socket.io.js"></script>
