@@ -90,10 +90,22 @@ socket.on('message', function(message) {
 
 ////////////////////////////////////////////////////
 
-var localVideo = document.querySelector('#localVideo');
-var remoteVideo = document.querySelector('#remoteVideo');
-var vid1 = document.querySelector('#vid1');
-var vid2 = document.querySelector('#vid2');
+class participant{
+    constructor(id,vid,screen){
+        this.id=id;
+        this.vid=vid;
+        this.screen=screen;
+    }
+}
+
+var mainVideo = document.querySelector('#mainVideo');
+var uservid = document.querySelector('#uservid');
+var userscreen = document.querySelector('#userscreen');
+var videos = document.getElementsByClassName("listelement");
+var participants = new Map();
+var count=1;
+var customattr='data-participant';
+
 navigator.mediaDevices.getUserMedia({
   audio: true,
   video: true
@@ -106,9 +118,10 @@ navigator.mediaDevices.getUserMedia({
 function gotStream(stream) {
   console.log('Adding local stream.');
   localStream = stream;
-  localVideo.srcObject = stream;
-  vid1.srcObject = localVideo.srcObject;
-  vid2.srcObject = localVideo.srcObject;
+  mainVideo.srcObject = stream;
+  uservid.srcObject = stream;
+  let temp = new participant('localuser',uservid,userscreen);
+  participants.set('localuser',temp);
   sendMessage('got user media');
   if (isInitiator) {
     maybeStart();
@@ -235,7 +248,32 @@ function requestTurn(turnURL) {
 function handleRemoteStreamAdded(event) {
   console.log('Remote stream added.');
   remoteStream = event.stream;
-  remoteVideo.srcObject = remoteStream;
+  let elementid = 'user'+count;
+  let newvidelement=document.createElement('video');
+  let viddiv=document.createElement('div');
+  viddiv.class='listelement';
+  newvidelement.class='camvideo';
+  newvidelement.id=elementid+'vid';
+  newvidelement.customattr=elementid;
+  newvidelement.onclick='change_mainvideo(this.class,this.data-participant)';
+  newvidelement.autoplay = true;
+  newvidelement.srcObject = remoteStream;
+  viddiv.appendChild(newvidelement);
+  document.getElementById('videolist').appendChild(viddiv);
+  let newscreenelement=document.createElement('video');
+  let screendiv=document.createElement('div');
+  screendiv.class='listelement';
+  newscreenelement.class='screenvideo';
+  newscreenelement.id=elementid+'screen';
+  newscreenelement.customattr=elementid;
+  newscreenelement.onclick='change_mainvideo(this.class,this.data-participant)';
+  newscreenelement.autoplay = true;
+  newscreenelement.muted = true;
+  screendiv.appendChild(newscreenelement);
+  document.getElementById('videolist').appendChild(screendiv);
+  let temp = new participant(elementid,newvidelement,newscreenelement);
+  participants.set(elementid,temp);
+  count++;
 }
 
 function handleRemoteStreamRemoved(event) {
@@ -294,6 +332,15 @@ function videotoggle() {
   }
 }   
 
+//Function to swap primary video
+function change_mainvideo(vidclass,vidId)
+{
+    let temp = participants.get(vidId);
+    if (vidclass=='camvideo')
+    mainVideo.srcObject=temp.vid.srcObject;
+    else
+    mainVideo.srcObject=temp.screen.srcObject;
+}
 function stop() {
   isStarted = false;
   pc.close();

@@ -13,7 +13,7 @@ video {
   top: 20px;
 }
 
-.videolist{
+#videolist{
  position: fixed;
  right: 5px;
  top: 60px; 

@@ -10,18 +10,17 @@
 <body>
 
   <div id="videos">
-    <video id="localVideo" autoplay></video>
-    <video id="remoteVideo" autoplay></video>
+    <video id="mainVideo" autoplay muted></video>
   </div>
   <button id="audioButton" onclick="audiotoggle()" type="button" value="audioOn">Mute</button>
   <button id="videoButton" onclick="videotoggle()" type="button" value="videoOn">Turn off video</button>
   <button id="videolistbutton" type="button">List</button>
-  <div class="videolist">
+  <div id="videolist">
   <div class="listelement">
-  <video id="vid1" autoplay muted></video>
+  <video class="camvideo" data-participant="localuser" id="uservid" onclick="change_mainvideo(this.class,this.data-participant)" autoplay></video>
   </div>
   <div class="listelement">
-  <video id="vid2" autoplay muted></video>
+  <video class="screenvideo" data-participant="localuser" id="userscreen" onclick="change_mainvideo(this.class,this.data-participant)" autoplay muted></video>
   </div>
   </div>
 
